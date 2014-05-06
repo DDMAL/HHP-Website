@@ -70,3 +70,16 @@ configure :build do
   # Or use a different image path
   # set :http_prefix, "/Content/images/"
 end
+
+username = ENV['USERNAME']
+
+activate :deploy do |deploy|
+  deploy.method   = :sftp
+  deploy.host     = "132.206.14.136"
+  deploy.port     = 22
+  deploy.path     = "/srv/HHP"
+  # Optional Settings
+  deploy.user     = username
+  #deploy.password = password # no default
+end
+

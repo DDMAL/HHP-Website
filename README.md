@@ -26,3 +26,19 @@ To install new gems, there are three quick steps:
 - `gem install _____`
 - Add ______ to your Gemfile with version information as necessary.
 - `bundle install` to make it official.
+
+Pushing code to the server
+-------
+This gets slightly more complicated. 
+
+Before the first time:
+- First, ask someone with root privileges to create a user account for you on the ddmal-webserver under the user group "wwweditors".
+- Once that is set, on your machine, run `brew install ssh-copy-id`. 
+- If you do not have an rsa keypair yet, run `ssh-keygen -t rsa` to get one and follow the instructions.
+- Run `ssh-copy-id -i ~/.ssh/id_rsa.pub (username on the server)@(server's IP)`, removing the parentheses.
+- On the server, run `eval $(ssh-agent)` then `ssh-add` and you should be set.
+
+To actually upload the site:
+- Open config.rb and make sure that under `activate :deploy` towards the bottom, `deploy.path` is `/srv/` followed by the correct site name. 
+- From the main directory, run `middleman build` to refresh the built copy.
+- From the same directory, run `USERNAME=(username on the server) middleman deploy`. (removing the parentheses again) This sets a temporary environmental variable that middleman will interpret as being your username.
